@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dilzoda uchun 💖</title>
+<style>
+  :root { --pink:#ff6fa5; --glow:#ff9ec6; --bg1:#1a0b2e; --bg2:#3b1255; --card:rgba(255,255,255,.08); --line:rgba(255,255,255,.18); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:#fbeaf3; line-height:1.6;
+         background:linear-gradient(180deg,var(--bg1),var(--bg2) 60%,#2a0e45); background-attachment:fixed; overflow-x:hidden; }
+  .script { font-family:Georgia,"Times New Roman",serif; font-style:italic; }
+  section { padding:64px 20px; max-width:900px; margin:auto; position:relative; z-index:2; }
+  h2 { font-family:Georgia,serif; font-style:italic; font-weight:400; font-size:2.1rem; text-align:center; color:var(--glow);
+       text-shadow:0 0 18px rgba(255,111,165,.6); margin-bottom:28px; }
+  .sub { text-align:center; opacity:.8; margin:-14px 0 24px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:22px; backdrop-filter:blur(6px); }
+
+  .star { position:fixed; background:#fff; border-radius:50%; z-index:0; animation:tw 3s infinite ease-in-out; }
+  @keyframes tw { 0%,100%{opacity:.15} 50%{opacity:1} }
+  .heart { position:fixed; bottom:-40px; z-index:1; pointer-events:none; animation:up linear forwards; }
+  @keyframes up { to { transform:translateY(-115vh) rotate(25deg); opacity:0; } }
+  .trail { position:fixed; z-index:50; pointer-events:none; animation:fade .9s forwards; }
+  @keyframes fade { to { transform:translateY(-30px) scale(.4); opacity:0; } }
+
+  .btn { display:inline-block; border:1px solid var(--pink); background:rgba(255,111,165,.18); color:#fff; padding:12px 30px; border-radius:50px;
+         font-size:1rem; cursor:pointer; text-decoration:none; transition:.3s; box-shadow:0 0 18px rgba(255,111,165,.35); font-family:inherit; }
+  .btn:hover { background:var(--pink); transform:translateY(-2px); }
+
+  /* music button */
+  #music { position:fixed; right:16px; bottom:16px; z-index:60; width:52px; height:52px; border-radius:50%; border:1px solid var(--pink);
+           background:rgba(26,11,46,.85); color:#fff; font-size:1.4rem; cursor:pointer; box-shadow:0 0 18px rgba(255,111,165,.6); }
+  #music.on { animation:spin 5s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg);} }
+
+  /* hero */
+  .hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px; position:relative; z-index:2; }
+  .hero .small { letter-spacing:3px; text-transform:uppercase; font-size:.8rem; opacity:.8; }
+  .hero h1 { font-family:Georgia,serif; font-style:italic; font-weight:400; font-size:clamp(3.2rem,15vw,7rem); color:#fff;
+             text-shadow:0 0 12px var(--pink),0 0 40px var(--pink); margin:10px 0; animation:beat 2.6s infinite; }
+  @keyframes beat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
+  #type { min-height:3.2em; max-width:520px; margin-bottom:22px; font-size:1.1rem; opacity:.95; }
+  .arrow { margin-top:36px; animation:bob 1.8s infinite; opacity:.7; }
+  @keyframes bob { 50%{ transform:translateY(8px);} }
+
+  /* counter */
+  .counter { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:18px 6px; text-align:center; }
+  .box b { display:block; font-size:clamp(1.5rem,7vw,2.5rem); color:#fff; text-shadow:0 0 14px var(--pink); }
+  .box span { font-size:.7rem; letter-spacing:1px; text-transform:uppercase; opacity:.75; }
+  .next { margin-top:22px; text-align:center; }
+  .next b { color:var(--glow); }
+
+  /* timeline */
+  .tl { position:relative; padding-left:30px; border-left:2px solid var(--line); margin-left:10px; }
+  .tl .it { position:relative; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px 18px; margin-bottom:22px; }
+  .tl .it::before { content:'💗'; position:absolute; left:-47px; top:12px; font-size:1.3rem; }
+  .tl .d { color:var(--glow); font-size:.85rem; font-weight:600; }
+  .tl h3 { font-size:1.05rem; margin:2px 0 4px; color:#fff; }
+  .tl p { opacity:.85; font-size:.95rem; }
+
+  /* reasons */
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; }
+  .reason { cursor:pointer; min-height:110px; padding:14px; display:flex; align-items:center; justify-content:center; text-align:center;
+            background:var(--card); border:1px solid var(--line); border-radius:18px; transition:.3s; user-select:none; }
+  .reason:hover { transform:translateY(-4px); }
+  .reason .n { font-family:Georgia,serif; font-style:italic; font-size:1.8rem; color:var(--glow); }
+  .reason .t { display:none; font-size:.92rem; }
+  .reason.open { background:linear-gradient(135deg,#ff6fa5,#b0307a); border-color:transparent; box-shadow:0 0 22px rgba(255,111,165,.5); }
+  .reason.open .n { display:none; } .reason.open .t { display:block; }
+
+  /* compliment */
+  .comp { text-align:center; }
+  #compText { min-height:3.4em; font-family:Georgia,serif; font-style:italic; font-size:1.4rem; color:var(--glow); margin-bottom:18px; text-shadow:0 0 14px rgba(255,111,165,.5); }
+
+  /* quiz */
+  #quiz .qq { font-size:1.2rem; margin-bottom:16px; text-align:center; }
+  #quiz .opt { display:block; width:100%; margin-bottom:10px; padding:12px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.06);
+               color:#fff; font-size:1rem; cursor:pointer; font-family:inherit; transition:.2s; }
+  #quiz .opt:hover { border-color:var(--pink); }
+  #quiz .opt.ok { background:#2e9d6a; border-color:#2e9d6a; }
+  #quiz .opt.bad { background:#b03a52; border-color:#b03a52; }
+  #quiz .prog { text-align:center; opacity:.7; font-size:.85rem; margin-bottom:10px; }
+  #quiz .res { text-align:center; }
+  #quiz .res h3 { font-family:Georgia,serif; font-style:italic; font-size:2rem; color:var(--glow); margin-bottom:8px; }
+
+  /* bucket list */
+  .bk { display:flex; align-items:center; gap:12px; padding:14px 16px; margin-bottom:10px; cursor:pointer; user-select:none;
+        background:var(--card); border:1px solid var(--line); border-radius:14px; transition:.2s; }
+  .bk:hover { border-color:var(--pink); }
+  .bk .ck { width:26px; height:26px; border:2px solid var(--pink); border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; font-size:.9rem; }
+  .bk.done { opacity:.7; } .bk.done .tx { text-decoration:line-through; } .bk.done .ck { background:var(--pink); }
+
+  /* meter */
+  .meter { text-align:center; }
+  .bar { height:26px; border-radius:20px; background:rgba(255,255,255,.12); overflow:hidden; margin:18px 0; border:1px solid var(--line); }
+  .bar i { display:block; height:100%; width:0; background:linear-gradient(90deg,#ff6fa5,#ffb36f,#ff6fa5); background-size:200% 100%; transition:width 2.2s ease; animation:slide 2s linear infinite; }
+  @keyframes slide { to { background-position:200% 0; } }
+  #pct { font-size:2.4rem; font-weight:700; color:#fff; text-shadow:0 0 14px var(--pink); }
+
+  /* question */
+  .q { text-align:center; }
+  .q p.big { font-size:1.5rem; margin-bottom:26px; }
+  #no { position:relative; transition:.15s; border-color:var(--line); background:rgba(255,255,255,.1); box-shadow:none; margin-left:10px; }
+  #yesMsg { display:none; margin-top:26px; font-size:1.7rem; color:var(--glow); text-shadow:0 0 14px var(--pink); }
+
+  /* secret */
+  .secret { text-align:center; }
+  .secret input { width:100%; padding:12px 16px; border-radius:50px; border:1px solid var(--line); background:rgba(0,0,0,.3); color:#fff; font-size:1rem; text-align:center; margin:14px 0 10px; outline:none; }
+  .secret input:focus { border-color:var(--pink); }
+  #err { color:#ff9aa8; font-size:.9rem; min-height:1.2em; margin-top:8px; }
+  #letter { display:none; text-align:left; font-size:1.05rem; line-height:1.9; }
+  #letter p { margin-bottom:14px; }
+
+  footer { text-align:center; padding:40px 20px 80px; opacity:.85; position:relative; z-index:2; }
+  footer .script { font-size:1.8rem; color:var(--glow); }
+  @media(max-width:420px){ .counter{gap:8px;} .box{padding:14px 2px;} }
+</style>
+</head>
+<body>
+
+<button id="music" title="Musiqa">🎵</button>
+
+<header class="hero">
+  <div class="small">Faqat sen uchun</div>
+  <h1>Dilzoda 💖</h1>
+  <div id="type"></div>
+  <a href="#vaqt" class="btn" id="start">Ochish va musiqani yoqish ✨</a>
+  <div class="arrow">⌄</div>
+</header>
+
+<section id="vaqt">
+  <h2>Birga o'tgan vaqtimiz</h2>
+  <p class="sub">6-avgust, 2026-yildan beri</p>
+  <div class="counter">
+    <div class="box"><b id="d">0</b><span>kun</span></div>
+    <div class="box"><b id="h">0</b><span>soat</span></div>
+    <div class="box"><b id="m">0</b><span>daqiqa</span></div>
+    <div class="box"><b id="s">0</b><span>soniya</span></div>
+  </div>
+  <div class="card next">Keyingi oylik bayramimizgacha: <b id="nx">...</b></div>
+</section>
+
+<section>
+  <h2>Bizning xotiralarimiz</h2>
+  <div class="tl">
+    <!-- Matnlarni o'zingizga moslab o'zgartiring -->
+    <div class="it"><div class="d">6-avgust, 2026</div><h3>Hammasi shu kundan boshlandi</h3><p>Hayotimdagi eng chiroyli kun. Shu kuni bizning hikoyamiz boshlandi.</p></div>
+    <div class="it"><div class="d">Sana yozing</div><h3>Birinchi uchrashuvimiz</h3><p>Qanchalik hayajonlanganimni hali ham eslayman.</p></div>
+    <div class="it"><div class="d">Sana yozing</div><h3>Birinchi sayrimiz</h3><p>Vaqt qanday o'tganini bilmay qoldik.</p></div>
+    <div class="it"><div class="d">Sana yozing</div><h3>Eng unutilmas kunimiz</h3><p>Buni umr bo'yi unutmayman.</p></div>
+    <div class="it"><div class="d">Kelajak</div><h3>Hali oldinda ko'p narsa bor</h3><p>Yana ko'plab chiroyli xotiralar yaratamiz, inshaalloh.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Seni sevishimning 10 sababi</h2>
+  <p class="sub">Har bir yurakchani bos 💌</p>
+  <div class="grid" id="reasons"></div>
+</section>
+
+<section class="comp">
+  <h2>Sen uchun iltifot</h2>
+  <div class="card">
+    <div id="compText">Tugmani bos 👇</div>
+    <button class="btn" id="compBtn">Iltifot ol 💌</button>
+  </div>
+</section>
+
+<section>
+  <h2>Meni qanchalik bilasan? 🎯</h2>
+  <div class="card" id="quiz"></div>
+</section>
+
+<section class="meter">
+  <h2>Sevgi o'lchagichi 💘</h2>
+  <div class="card">
+    <p>Sening sevgingni o'lchaymizmi?</p>
+    <div class="bar"><i id="fill"></i></div>
+    <div id="pct">0%</div>
+    <p id="mtxt" style="min-height:1.6em;opacity:.9"></p>
+    <br>
+    <button class="btn" id="meterBtn">O'lchash 🔥</button>
+  </div>
+</section>
+
+<section class="q">
+  <h2>Bitta savolim bor...</h2>
+  <p class="big">Meni sevasanmi, Dilzoda? 🥺</p>
+  <button class="btn" id="yes">Ha 💖</button><button class="btn" id="no">Yo'q</button>
+  <p id="yesMsg" class="script">Bilardim! Men ham seni juda yaxshi ko'raman 💞</p>
+</section>
+
+<section>
+  <h2>Maxfiy xabar 🔒</h2>
+  <div class="card secret">
+    <div id="lock">
+      <p>Xabarni ochish uchun parolni kiriting</p>
+      <small style="opacity:.7">Maslahat: <span id="hint"></span></small>
+      <input type="text" id="pass" placeholder="Parol" autocomplete="off">
+      <button class="btn" id="open">Ochish</button>
+      <div id="err"></div>
+    </div>
+    <div id="letter">
+      <p class="script" style="font-size:1.8rem;color:var(--glow);text-align:center">Aziz Dilzoda,</p>
+      <p>Seni uchratganimdan beri hayotim butunlay o'zgardi. Sen bilan har bir kun yangi va yorqin tuyuladi. Tabassuming kayfiyatimni ko'taradi, ovozing esa meni tinchlantiradi.</p>
+      <p>Bu sahifani senga shunchaki, hech qanday bayramsiz tayyorladim, chunki sevgi uchun sabab shart emas. Seni har kuni o'ylayman va sen borligingdan baxtiyorman.</p>
+      <p>Yonimda bo'lganing uchun rahmat. Hali oldinda ko'p chiroyli kunlarimiz bor.</p>
+      <p style="text-align:right">Seni sevuvchi,<br><span class="script" style="font-size:1.6rem;color:var(--glow)">Sardorbek ❤️</span></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="script">Sardorbek &amp; Dilzoda</div>
+  <small>6-avgust, 2026 dan beri 💗</small>
+</footer>
+
+<script>
+  // ================= SOZLAMALAR (shu yerni o'zgartiring) =================
+  var BOSHLANISH = new Date("2026-08-06T00:00:00");
+  var PAROL = "sevaman";
+  var MASLAHAT = "Men sendan har kuni shuni aytaman (bitta so'z, kichik harflarda)";
+  var SALOM = "Sen mening eng chiroyli tasodifimsan. Bu sahifa faqat sen uchun.";
+  var MP3 = "qoshiq1.mp3"; // o'z qo'shig'ingiz bo'lsa fayl nomini yozing, masalan "qoshiq.mp3". Bo'sh bo'lsa, o'rnatilgan musiqa ishlaydi.
+  var SABABLAR = [
+    "Kulgingni eshitganda dunyoni unutaman",
+    "Sen menga o'zim bo'lishga imkon berasan",
+    "Ko'zlaring juda chiroyli",
+    "Har doim meni tushunasan",
+    "Yonimda bo'lsang, hamma narsa osonlashadi",
+    "Mehribonligingni juda yaxshi ko'raman",
+    "Sen bilan oddiy kunlar ham bayramga aylanadi",
+    "Meni yaxshiroq bo'lishga undaysan",
+    "Hayotga bo'lgan nigohingni yoqtiraman",
+    "Chunki sen Dilzodasan, shunchaki shu yetarli"
+  ];
+  var ILTIFOTLAR = [
+    "Tabassuming butun kunimni yoritadi",
+    "Sen dunyodagi eng yoqimli insonsan",
+    "Ko'zlaring yulduzlardan ham yorqin",
+    "Seni o'ylasam, yuzimga o'zi tabassum yuguradi",
+    "Sen bilan vaqt o'tganini sezmay qolaman",
+    "Sen juda aqlli va nozik didlisan",
+    "Ovozing eng sevimli musiqamdan ham yoqimli",
+    "Sen borligingdan hayot chiroyliroq",
+    "Sen kulganda hamma narsa o'zgaradi",
+    "Sendan yaxshi kayfiyat manbai yo'q"
+  ];
+  var QUIZ = [
+    { q:"Biz qaysi oyda birga bo'ldik?", o:["Iyun","Iyul","Avgust","Sentabr"], a:2 },
+    { q:"Dunyodagi eng chiroyli qiz kim?", o:["Dilzoda","Dilzoda","Dilzoda","Dilzoda"], a:0 },
+    { q:"Seni eng ko'p kim yaxshi ko'radi?", o:["Sardorbek","Sardorbek","Sardorbek","Sardorbek"], a:0 },
+    { q:"Kim kim bilan baxtli?", o:["Sardorbek Dilzoda bilan","Dilzoda Sardorbek bilan","Ikkalasi bir-biri bilan"], a:2 }
+  ];
+  // =======================================================================
+
+  function $(id){ return document.getElementById(id); }
+
+  // yulduzlar
+  for (var i=0;i<70;i++){
+    var st=document.createElement('div'); st.className='star';
+    var z=Math.random()*2.5+1;
+    st.style.cssText='width:'+z+'px;height:'+z+'px;left:'+Math.random()*100+'vw;top:'+Math.random()*100+'vh;animation-delay:'+Math.random()*3+'s';
+    document.body.appendChild(st);
+  }
+
+  // yurakchalar
+  function heart(){
+    var h=document.createElement('div'); h.className='heart';
+    var e=['💖','💗','💕','❤️','💘'];
+    h.textContent=e[Math.floor(Math.random()*e.length)];
+    h.style.left=Math.random()*100+'vw';
+    h.style.fontSize=(16+Math.random()*24)+'px';
+    h.style.animationDuration=(6+Math.random()*6)+'s';
+    document.body.appendChild(h);
+    setTimeout(function(){ h.remove(); },12500);
+  }
+  setInterval(heart,1100);
+  function burst(n){ for(var i=0;i<n;i++) setTimeout(heart,i*55); }
+
+  // barmoq/sichqoncha izi
+  var lastT=0;
+  function trail(x,y){
+    var now=Date.now(); if(now-lastT<70) return; lastT=now;
+    var t=document.createElement('div'); t.className='trail'; t.textContent='💗';
+    t.style.left=x+'px'; t.style.top=y+'px'; t.style.fontSize=(12+Math.random()*10)+'px';
+    document.body.appendChild(t); setTimeout(function(){ t.remove(); },900);
+  }
+  document.addEventListener('mousemove',function(e){ trail(e.clientX,e.clientY); });
+  document.addEventListener('touchmove',function(e){ var t=e.touches[0]; trail(t.clientX,t.clientY); },{passive:true});
+
+  // yozuv effekti
+  (function(){ var i=0, el=$('type');
+    (function go(){ if(i<=SALOM.length){ el.textContent=SALOM.slice(0,i++); setTimeout(go,55); } })();
+  })();
+
+  // hisoblagich
+  function tick(){
+    var s=Math.max(0,Math.floor((Date.now()-BOSHLANISH.getTime())/1000));
+    $('d').textContent=Math.floor(s/86400);
+    $('h').textContent=Math.floor(s%86400/3600);
+    $('m').textContent=Math.floor(s%3600/60);
+    $('s').textContent=s%60;
+    // keyingi oylik bayram (har oyning shu sanasi)
+    var n=new Date(), day=BOSHLANISH.getDate();
+    var t=new Date(n.getFullYear(),n.getMonth(),day);
+    if(n>=t) t=new Date(n.getFullYear(),n.getMonth()+1,day);
+    var r=Math.floor((t-n)/1000);
+    $('nx').textContent=Math.floor(r/86400)+" kun "+Math.floor(r%86400/3600)+" soat "+Math.floor(r%3600/60)+" daqiqa";
+  }
+  tick(); setInterval(tick,1000);
+
+  // sabablar
+  SABABLAR.forEach(function(t,i){
+    var d=document.createElement('div'); d.className='reason';
+    d.innerHTML='<span class="n">'+(i+1)+' 💗</span><span class="t">'+t+'</span>';
+    d.onclick=function(){ d.classList.toggle('open'); };
+    $('reasons').appendChild(d);
+  });
+
+  // iltifot
+  var lastC=-1;
+  $('compBtn').onclick=function(){
+    var k; do{ k=Math.floor(Math.random()*ILTIFOTLAR.length); }while(k===lastC && ILTIFOTLAR.length>1);
+    lastC=k; $('compText').textContent=ILTIFOTLAR[k]; burst(6);
+  };
+
+  // viktorina
+  var qi=0, score=0;
+  function showQ(){
+    var box=$('quiz'); box.innerHTML='';
+    if(qi>=QUIZ.length){
+      var msg = score===QUIZ.length ? "Ajoyib! Sen meni juda yaxshi bilasan 💖" : "Yaxshi urinish! Hali birga ko'p narsani bilib olamiz 💕";
+      box.innerHTML='<div class="res"><h3>'+score+' / '+QUIZ.length+'</h3><p>'+msg+'</p><br><button class="btn" id="again">Qaytadan</button></div>';
+      $('again').onclick=function(){ qi=0; score=0; showQ(); };
+      if(score===QUIZ.length) burst(25);
+      return;
+    }
+    var q=QUIZ[qi];
+    box.innerHTML='<div class="prog">Savol '+(qi+1)+' / '+QUIZ.length+'</div><div class="qq">'+q.q+'</div>';
+    q.o.forEach(function(t,idx){
+      var b=document.createElement('button'); b.className='opt'; b.textContent=t;
+      b.onclick=function(){
+        var all=box.querySelectorAll('.opt');
+        for(var j=0;j<all.length;j++){ all[j].disabled=true; if(j===q.a) all[j].classList.add('ok'); }
+        if(idx===q.a) score++; else b.classList.add('bad');
+        setTimeout(function(){ qi++; showQ(); },900);
+      };
+      box.appendChild(b);
+    });
+  }
+  showQ();
+
+  // sevgi o'lchagichi
+  var mTimer;
+  $('meterBtn').onclick=function(){
+    clearInterval(mTimer);
+    var f=$('fill'); f.style.transition='none'; f.style.width='0%'; $('mtxt').textContent='';
+    setTimeout(function(){ f.style.transition='width 2.2s ease'; f.style.width='100%'; },30);
+    var p=0; $('pct').textContent='0%';
+    mTimer=setInterval(function(){
+      p+=2;
+      if(p<=100){ $('pct').textContent=p+'%'; }
+      else { clearInterval(mTimer); $('pct').textContent='∞%'; $('mtxt').textContent='O\'lchagich yetmay qoldi: sevgi o\'lchovsiz! 💞'; burst(25); }
+    },44);
+  };
+
+  // savol
+  var no=$('no');
+  function run(e){ if(e&&e.preventDefault) e.preventDefault(); no.style.transform='translate('+(Math.random()-.5)*200+'px,'+(Math.random()-.5)*140+'px)'; }
+  no.addEventListener('mouseover',run); no.addEventListener('touchstart',run);
+  $('yes').onclick=function(){ $('yesMsg').style.display='block'; burst(35); };
+
+  // maxfiy xabar
+  $('hint').textContent=MASLAHAT;
+  function openLetter(){
+    if($('pass').value.trim().toLowerCase()===PAROL.toLowerCase()){
+      $('lock').style.display='none'; $('letter').style.display='block'; burst(40);
+    } else $('err').textContent="Parol noto'g'ri, yana urinib ko'ring 💭";
+  }
+  $('open').onclick=openLetter;
+  $('pass').addEventListener('keydown',function(e){ if(e.key==='Enter') openLetter(); });
+
+  // ================= MUSIQA =================
+  var ac=null, master=null, step=0, mTick=null, on=false, fileAudio=null;
+  var CH=[[261.63,329.63,392.00],[220.00,261.63,329.63],[174.61,220.00,261.63],[196.00,246.94,293.66]];
+  var PE=[523.25,587.33,659.25,783.99,880.00,1046.50];
+  var PAT=[0,1,2,1,2,1,2,1];
+
+  function note(f,t,dur,type,vol){
+    var o=ac.createOscillator(), g=ac.createGain();
+    o.type=type; o.frequency.value=f;
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.linearRampToValueAtTime(vol,t+0.04);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t+dur+0.1);
+  }
+  function stepPlay(){
+    var t=ac.currentTime+0.05, ch=CH[Math.floor(step/8)%4], i=step%8;
+    note(ch[PAT[i]],t,1.3,'triangle',0.2);
+    if(i===0) note(ch[0]/2,t,3.4,'sine',0.28);
+    if(i%2===0 && Math.random()<0.65) note(PE[Math.floor(Math.random()*PE.length)],t+0.02,1.6,'sine',0.1);
+    step++;
+  }
+  function initAudio(){
+    var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return false;
+    ac=new AC(); master=ac.createGain(); master.gain.value=0.55;
+    var dl=ac.createDelay(); dl.delayTime.value=0.36;
+    var fb=ac.createGain(); fb.gain.value=0.38;
+    master.connect(ac.destination); master.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(ac.destination);
+    return true;
+  }
+  function musicOn(){
+    if(MP3){
+      if(!fileAudio){ fileAudio=new Audio(MP3); fileAudio.loop=true; }
+      fileAudio.play().catch(function(){});
+    } else {
+      if(!ac && !initAudio()) return;
+      if(ac.state==='suspended') ac.resume();
+      if(!mTick) mTick=setInterval(stepPlay,430);
+    }
+    on=true; $('music').classList.add('on');
+  }
+  function musicOff(){
+    if(fileAudio) fileAudio.pause();
+    if(mTick){ clearInterval(mTick); mTick=null; }
+    on=false; $('music').classList.remove('on');
+  }
+  $('music').onclick=function(){ on ? musicOff() : musicOn(); };
+  $('start').addEventListener('click',function(){ if(!on) musicOn(); });
+</script>
+</body>
+</html>
